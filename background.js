@@ -3,9 +3,11 @@ chrome.runtime.onInstalled.addListener(() => {
     console.log("Password not set yet.");
   });
 });
-chrome.browserAction.onClicked.addListener(() => {
-  chrome.tabs.create({ url: chrome.runtime.getURL("popup.html") });
+
+chrome.action.onClicked.addListener(() => {
+  chrome.tabs.create({ url: chrome.runtime.getURL("index.html") });
 });
+
 chrome.runtime.onStartup.addListener(() => {
   chrome.storage.local.get("password", (result) => {
     if (result.password) {
@@ -17,6 +19,7 @@ chrome.runtime.onStartup.addListener(() => {
     }
   });
 });
+
 function closeBrowser() {
   // Note: Directly closing the browser is not supported for security reasons. Here, we can close all tabs as a workaround.
   chrome.tabs.query({}, function (tabs) {
